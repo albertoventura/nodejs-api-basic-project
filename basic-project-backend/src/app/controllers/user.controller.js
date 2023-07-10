@@ -1,19 +1,64 @@
+const userService = require('../services/user.service');
 
 const userController = {
     getAll: async (req, res) => {
-        res.send('get all subject@');
+        try {
+            const response = await userService.getAll();
+            return res.status(201).json(response);
+        } catch(e) {
+            return res.status(400).send(e);
+        }
     },
     getById: async (req, res) => {
-        res.send('get id subject@');
+        try {
+            const { id } = req.params;
+            const response = await userService.getById(id);
+
+            if (response){
+                return res.status(201).json(response);
+            }
+        } catch(e) {
+            return res.status(400).send(e);
+        }
     },
     create: async (req, res) => {
-        res.send('create subject@');
+        try {
+            const { name, email } = req.body;
+            const response = await userService.create(name, email);
+            if(response){
+                return res.status(201).json(response);
+            }
+            return res.status(400).send('erro create');
+        } catch(e) {
+            return res.status(400).send(e);
+        }
     },
     update: async (req, res) => {
-        res.send('update subject@');
+        try {
+            const { id } = req.params;
+            const { name, email } = req.body;
+            const response = await userService.update(id, name, email);
+            
+            if(response){
+                return res.status(201).json(response);
+            }
+            return res.status(400).send('erro update');
+        } catch(e) {
+            return res.status(400).send(e);
+        }
     },
     delete: async (req, res) => {
-        res.send('delete subject@');
+        try {
+            const { id } = req.params;
+            const response = await userService.delete(id);
+
+            if(response){
+                return res.status(201).json(response);
+            }
+            return res.status(400).send('erro delete');
+        } catch(e) {
+            return res.status(400).send(e);
+        }
     }
 }
 
