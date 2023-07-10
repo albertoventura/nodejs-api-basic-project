@@ -3,6 +3,7 @@ const router = express.Router() */
 const { Router } = require('express');
 const router = Router();
 const path = require('../../constant/path');
+const userController = require('../controllers/user.controller');
 
 /* module.exports = function(application){
     
@@ -13,20 +14,10 @@ const path = require('../../constant/path');
     })
 } */
 
-router.get(path.userPath.getAllUsers, (req, res) => {
-    res.send('get all subject');
-});
-router.get(path.userPath.getUserById, (req, res) => {
-    res.send('get by id subject');
-});
-router.post(path.userPath.createUser, (req, res) => {
-    res.send('post subject');
-});
-router.put(path.userPath.updateUser, (req, res) => {
-    res.send('put subject');
-});
-router.delete(path.userPath.deleteUser, (req, res) => {
-    res.send('delete subject');
-});
+router.get(path.userPath.getAllUsers, userController.getAll);
+router.get(path.userPath.getUserById, userController.getById);
+router.post(path.userPath.createUser, userController.create);
+router.put(path.userPath.updateUser, userController.update);
+router.delete(path.userPath.deleteUser, userController.delete);
 
 module.exports = router;
