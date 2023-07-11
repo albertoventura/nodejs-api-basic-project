@@ -1,4 +1,5 @@
 const userService = require('../services/user.service');
+const statusMessage = require('../../constant/statusMessage');
 
 const userController = {
     getAll: async (req, res) => {
@@ -18,7 +19,7 @@ const userController = {
                 return res.status(201).json(response);
             }
         } catch(e) {
-            return res.status(400).send(e);
+            return res.status(400).send(statusMessage.user.notfound);
         }
     },
     create: async (req, res) => {
@@ -28,7 +29,7 @@ const userController = {
             if(response){
                 return res.status(201).json(response);
             }
-            return res.status(400).send('erro create');
+            return res.status(400).send(statusMessage.user.createdError);
         } catch(e) {
             return res.status(400).send(e);
         }
@@ -42,7 +43,7 @@ const userController = {
             if(response){
                 return res.status(201).json(response);
             }
-            return res.status(400).send('erro update');
+            return res.status(400).send(statusMessage.user.notfound);
         } catch(e) {
             return res.status(400).send(e);
         }
@@ -55,7 +56,7 @@ const userController = {
             if(response){
                 return res.status(201).json(response);
             }
-            return res.status(400).send('erro delete');
+            return res.status(400).send(statusMessage.user.notfound);
         } catch(e) {
             return res.status(400).send(e);
         }
