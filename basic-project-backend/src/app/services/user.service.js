@@ -1,16 +1,40 @@
 const helper = require('../../helpers/general');
+const fs = require("fs");
+const User = require("../models/user.model");
 
 const userService = {
     getAll: async _ => {
-        return await Users;
+        //return await Users;
+        try {
+            await User.find()
+                .then( users => {
+                    return users;
+                })
+                .catch(e => {
+                    return e;
+                });
+        } catch(e){
+            return e;
+        }
     },
     getById: async (id) => {
-        const i = _getIndexOf(id);
+        /* const i = _getIndexOf(id);
         const user = Users[i];
-        return user ? user : false;
+        return user ? user : false; */
+        try {
+            await User.findById({_id: id})
+                .then(user => {
+                    return user;
+                })
+                .catch( e =>{
+                    return e;
+                });
+        } catch(e){
+            return e;
+        }
     },
-    create: async (username, email) => {
-        const user = {
+    create: async (data) => {
+        /* const user = {
             id: helper.generateId(),
             name: username,
             email: email
@@ -20,27 +44,47 @@ const userService = {
             nome: user.name,
             email: user.email
         });
-        return user;
+        return user; */
+        //console.log(data);
+        try {
+            const user = new User({
+                name: data.name,
+                email: data.email,
+                //img: data.img
+            });
+            console.log('#', user);
+            user.save()
+                .then(doc => {
+                    console.log('@', doc);
+                    return doc;
+                })
+                .catch( err => {
+                    console.log('@', err);
+                    return err;
+                });
+        } catch(e){
+            return e;
+        }
     },
     update: async (id, username, email) => {
-        const i = _getIndexOf(id);
+       /*  const i = _getIndexOf(id);
 
         if(i || i == 0) {
             Users[i].nome = username;
             Users[i].email = email;
             return Users[i];
         }
-        return false;
+        return false; */
     },
     delete: async (id) => {
-        const user = userService.getById(id);
+        /* const user = userService.getById(id);
         console.log(user);
         if(user){
             const i = _getIndexOf(id);
             Users.splice(i,1);
             return true;
         }
-        return false;
+        return false; */
     }
 }
 

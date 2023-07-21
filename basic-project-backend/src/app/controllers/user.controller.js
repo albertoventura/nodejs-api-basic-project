@@ -25,13 +25,23 @@ const userController = {
     create: async (req, res) => {
         try {
             const { name, email } = req.body;
-            const response = await userService.create(name, email);
-            if(response){
+            //const response = await userService.create({name, email});
+            await userService.create({name, email})
+                .then( data => {
+                    console.log('$$$$', data);
+                    return res.status(201).json(data);
+                })
+                .catch( e =>{
+                    return res.status(400).json(e);
+                });
+            /* if(response){
+                console.log('$$$$', response);
                 return res.status(201).json(response);
             }
-            return res.status(400).send(statusMessage.user.createdError);
+            //return res.status(400).send(statusMessage.user.createdError);
+            return res.status(400).json(response); */
         } catch(e) {
-            return res.status(400).send(e);
+            return res.status(500).json(e);
         }
     },
     update: async (req, res) => {
