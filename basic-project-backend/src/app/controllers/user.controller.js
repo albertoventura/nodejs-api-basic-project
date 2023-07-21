@@ -4,17 +4,22 @@ const statusMessage = require('../../constant/statusMessage');
 const userController = {
     getAll: async (req, res) => {
         try {
-            const response = await userService.getAll();
-            return res.status(201).json(response);
+            await userService.getAll()
+                .then( users => {
+                    return res.status(201).json(users);
+                })
+                .catch( err => {
+                    return res.status(400).json(err);
+                });
         } catch(e) {
-            return res.status(400).send(e);
+            return res.status(500).send(e);
         }
     },
     getById: async (req, res) => {
         try {
             const { id } = req.params;
             const response = await userService.getById(id);
-
+            
             if (response){
                 return res.status(201).json(response);
             }
@@ -48,14 +53,14 @@ const userController = {
         try {
             const { id } = req.params;
             const { name, email } = req.body;
-            const response = await userService.update(id, name, email);
+            const response = await userService.update({id, name, email});
             
             if(response){
                 return res.status(201).json(response);
             }
             return res.status(400).send(statusMessage.user.notfound);
         } catch(e) {
-            return res.status(400).send(e);
+            return res.status(500).send(e);
         }
     },
     delete: async (req, res) => {
