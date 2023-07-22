@@ -6,6 +6,7 @@ var express = require('express'),
 /* routes */
 const path = require('../constant/path');
 const userRouter = require('../app/routers/user.router');
+const loginRouter = require("../app/routers/login.router");
 
 /* inciar */
 var app = express();
@@ -18,6 +19,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use(path.userPath.root, userRouter);
+app.use(path.loginPath.root, loginRouter);
 //app.use('/', routes);
 
 /* exportar objeto app */

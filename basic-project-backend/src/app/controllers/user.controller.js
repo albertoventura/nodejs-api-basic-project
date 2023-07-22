@@ -3,6 +3,8 @@ const statusMessage = require('../../constant/statusMessage');
 
 const userController = {
     getAll: async (req, res) => {
+        const userAuth = res.authenticated;
+        console.log('@@@@ auth', userAuth);
         try {
             await userService.getAll()
                 .then( users => {

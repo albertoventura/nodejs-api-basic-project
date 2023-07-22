@@ -6,6 +6,8 @@ const path = require('../../constant/path');
 const uploadFile = require("../middleware/multer");
 const userController = require('../controllers/user.controller');
 
+const authMiddleware = require("../middleware/auth.middleware");
+
 /* module.exports = function(application){
     
     const router = application.express.Router();
@@ -15,7 +17,7 @@ const userController = require('../controllers/user.controller');
     })
 } */
 
-router.get(path.userPath.getAllUsers, userController.getAll);
+router.get(path.userPath.getAllUsers, authMiddleware, userController.getAll);
 router.get(path.userPath.getUserById, userController.getById);
 router.post(path.userPath.createUser, uploadFile.single("file"), userController.create);
 router.put(path.userPath.updateUser, userController.update);
