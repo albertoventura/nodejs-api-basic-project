@@ -34,7 +34,7 @@ const userService = {
             const user = new User({
                 name: data.name,
                 email: data.email,
-                //img: data.img
+                img: data.img ? data.img : "",
             });
             return user.save()
                 .then(doc => {
@@ -54,6 +54,13 @@ const userService = {
                     old = user;
                     user.name = data.name;
                     user.email = data.email;
+                    //user.img = data.img ? data.img : old.img
+                    if(data.img){
+                        if(old.img){
+                            fs.unlinkSync(old.img);
+                        }
+                        user.img = data.img
+                    }
                     return user.save();
                 })
                 .catch(e => {
@@ -67,6 +74,20 @@ const userService = {
         try {
             return await User.findByIdAndDelete({_id: id})
                 .then(data => {
+                    console.log('del data:', data);
+                    console.log('del data img:', data.img);
+                    if(data.img){
+                        console.log('##########>', data.img);
+                        fs.unlinkSync(data.img)
+                            .then(a => { 
+                                console.log("@@", a);    
+                                return a
+                            })
+                            .catch(e => {
+                                console.log("eee", e);    
+                                return e
+                            });
+                    }
                     return data;
                 })
                 .catch(e => {

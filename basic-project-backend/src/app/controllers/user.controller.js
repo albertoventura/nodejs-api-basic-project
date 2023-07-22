@@ -30,10 +30,20 @@ const userController = {
     create: async (req, res) => {
         try {
             const { name, email } = req.body;
+            var img;
+            /* console.log("data", { name, email}); */
+            if(req.file){
+                /* console.log("file", req.file); */
+                img = req.file.path
+            }
+            /* console.log("img", img); */
+            
+            /* console.log("data", { name, email});
+            console.log("file", file); */
             //const response = await userService.create({name, email});
-            await userService.create({name, email})
+            await userService.create({name, email, img})
                 .then( data => {
-                    console.log('$$$$', data);
+                    /* console.log('$$$$', data); */
                     return res.status(201).json(data);
                 })
                 .catch( e =>{
@@ -53,7 +63,11 @@ const userController = {
         try {
             const { id } = req.params;
             const { name, email } = req.body;
-            const response = await userService.update({id, name, email});
+            var img;
+            if(req.file){
+                img = req.file.path
+            }
+            const response = await userService.update({id, name, email, img});
             
             if(response){
                 return res.status(201).json(response);
