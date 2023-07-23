@@ -20,7 +20,7 @@ const userController = require('../controllers/user.controller');
 router.get(path.userPath.getAllUsers, userController.getAll);
 router.get(path.userPath.getUserById, userController.getById);
 router.post(path.userPath.createUser, uploadFile.single("file"), userController.create);
-router.put(path.userPath.updateUser, userController.update);
+router.put(path.userPath.updateUser, uploadFile.single("file"), userController.update);
 router.delete(path.userPath.deleteUser, userController.delete);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const helper = require('../../helpers/general');
 const fs = require("fs");
+const md5 = require("md5");
 const User = require("../models/user.model");
 
 const userService = {
@@ -31,9 +32,11 @@ const userService = {
     },
     create: async (data) => {
         try {
+            const passwordHash = md5(data.password);
             const user = new User({
                 name: data.name,
                 email: data.email,
+                password: passwordHash,
                 img: data.img ? data.img : "",
             });
             return user.save()
@@ -52,8 +55,9 @@ const userService = {
             return await User.findById({_id: data.id})
                 .then( user => {
                     old = user;
-                    user.name = data.name;
-                    user.email = data.email;
+                    user.name = data.name ?? old.name;
+                    user.email = data.email ?? old.email;
+                    user.password = data.password ? md5(data.password) : old.password;
                     //user.img = data.img ? data.img : old.img
                     if(data.img){
                         if(old.img){

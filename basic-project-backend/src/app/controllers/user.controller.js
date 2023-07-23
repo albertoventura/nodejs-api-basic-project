@@ -31,7 +31,7 @@ const userController = {
     },
     create: async (req, res) => {
         try {
-            const { name, email } = req.body;
+            const { name, email, password } = req.body;
             var img;
             /* console.log("data", { name, email}); */
             if(req.file){
@@ -43,7 +43,7 @@ const userController = {
             /* console.log("data", { name, email});
             console.log("file", file); */
             //const response = await userService.create({name, email});
-            await userService.create({name, email, img})
+            await userService.create({name, email, password, img})
                 .then( data => {
                     /* console.log('$$$$', data); */
                     return res.status(201).json(data);
@@ -64,12 +64,12 @@ const userController = {
     update: async (req, res) => {
         try {
             const { id } = req.params;
-            const { name, email } = req.body;
+            const { name, email, password} = req.body;
             var img;
             if(req.file){
                 img = req.file.path
             }
-            const response = await userService.update({id, name, email, img});
+            const response = await userService.update({id, name, email, password, img});
             
             if(response){
                 return res.status(201).json(response);
