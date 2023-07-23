@@ -8,6 +8,7 @@ const path = require('../constant/path');
 const userRouter = require('../app/routers/user.router');
 const loginRouter = require("../app/routers/login.router");
 
+const authMiddleware = require("../app/middleware/auth.middleware");
 /* inciar */
 var app = express();
 
@@ -18,8 +19,10 @@ require("../app/database/db");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use(path.userPath.root, userRouter);
 app.use(path.loginPath.root, loginRouter);
+
+app.use(authMiddleware);
+app.use(path.userPath.root, userRouter);
 //app.use('/', routes);
 
 /* exportar objeto app */
