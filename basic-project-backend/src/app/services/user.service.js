@@ -37,7 +37,6 @@ const userService = {
                 name: data.name,
                 email: data.email,
                 password: passwordHash,
-                //img: data.img ? data.img : "",
                 img: data.img,
             });
             return user.save()
@@ -59,7 +58,7 @@ const userService = {
                     user.name = data.name ?? old.name;
                     user.email = data.email ?? old.email;
                     user.password = data.password ? md5(data.password) : old.password;
-                    //user.img = data.img ? data.img : old.img
+                    
                     if(data.img){
                         if(old.img){
                             fs.unlinkSync(old.img);
@@ -72,26 +71,15 @@ const userService = {
                     return e;
                 });
         } catch (e) {
-            console.log('$', e);
+            return e;
         }
     },
     delete: async (id) => {
         try {
             return await User.findByIdAndDelete({_id: id})
                 .then(data => {
-                    console.log('del data:', data);
-                    console.log('del data img:', data.img);
                     if(data.img){
-                        console.log('##########>', data.img);
                         fs.unlinkSync(data.img);
-                            /* .then(a => { 
-                                console.log("@@", a);    
-                                return a
-                            })
-                            .catch(e => {
-                                console.log("eee", e);    
-                                return e
-                            }); */
                     }
                     return data;
                 })
@@ -104,22 +92,4 @@ const userService = {
     }
 }
 
-const _getIndexOf = (id) => {
-    return Users.findIndex( user => user.id == id);
-}
-
 module.exports = userService;
-
-
-const Users = [
-    { id: 1, nome: 'Ana', email: 'ana@gmail.com' },
-    { id: 2, nome: 'João', email: 'joao@yahoo.com' },
-    { id: 3, nome: 'Maria', email: 'maria@hotmail.com' },
-    { id: 4, nome: 'Pedro', email: 'pedro@gmail.com' },
-    { id: 5, nome: 'Carla', email: 'carla@yahoo.com' },
-    { id: 6, nome: 'Miguel', email: 'miguel@hotmail.com' },
-    { id: 7, nome: 'Sofia', email: 'sofia@gmail.com' },
-    { id: 8, nome: 'Lucas', email: 'lucas@yahoo.com' },
-    { id: 9, nome: 'Julia', email: 'julia@hotmail.com' },
-    { id: 10, nome: 'Rafael', email: 'rafael@gmail.com' }
-];

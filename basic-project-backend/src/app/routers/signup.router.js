@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const router = Router();
+const uploadFile = require("../middleware/multer");
 const signupController = require("../controllers/signup.controller");
 
-router.post('/', signupController.signup);
+router.post('/', uploadFile.single("file"), signupController.signup);
 
 module.exports = router;

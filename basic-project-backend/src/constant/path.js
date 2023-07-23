@@ -1,5 +1,3 @@
-//const root = '/users';
-
 const user = {
     root: '/users',
     getAllUsers: '/',
@@ -9,8 +7,6 @@ const user = {
     deleteUser: '/:id',
 }
 const signup = {
-    /* singin: "/signin",
-    singup: "/signup", */
     root: '/signup'
 }
 const login = {

@@ -4,10 +4,10 @@ const jwtService = require("./jwt.service");
 const userService = require("../services/user.service");
 
 const loginService = {
-    validateBody: (data) => {
+    validateData: (data) => {
         const schema = joi.object({
-            email: joi.string().email().required(),
-            password: joi.string().required().min(6),
+            email: joi.string().trim().email().required(),
+            password: joi.string().trim().required().min(6),
         });
 
         const { error, value } = schema.validate(data);
@@ -22,17 +22,17 @@ const loginService = {
     },
     login: async (data) => {
         const passwordHash = md5(data.password);
-        /* const user = await mock.find( e => {
-            return data.email === e.email;
-        }); */
+
         const user = await userService.getAll()
             .then( user => {
                 return user.find(e => {
                     return data.email === e.email;
                 });
             })
-            .catch()
-        console.log('loggggggin', user);
+            .catch(e => {
+                return e;
+            })
+
         if(!user || user.password !== passwordHash){
             throw new Error('Invalid user NotFoundError');
         }
@@ -45,11 +45,3 @@ const loginService = {
 }
 
 module.exports = loginService;
-
-const mock = [
-    { 
-        name: 'João',
-        email: 'joao@mail.com',
-        password: '7cbb3252ba6b7e9c422fac5334d22054'
-    },
-];

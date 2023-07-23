@@ -2,7 +2,7 @@ const joi = require("joi");
 const md5 = require("md5");
 const User = require("../models/user.model");
 const signupService = {
-    validation: (data) => {
+    validateData: (data) => {
         const schema = joi.object({
             name: joi.string().trim().required(),
             email: joi.string().trim().email().required(),
@@ -19,16 +19,6 @@ const signupService = {
 
         return value;
     },
-    /* create: async (data) => {
-        try {
-            const passwordHash = md5(data.password);
-            const user = newUser({
-
-            })
-        } catch (error) {
-            
-        }
-    } */
 }
 
 module.exports = signupService;

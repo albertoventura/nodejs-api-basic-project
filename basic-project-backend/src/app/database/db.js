@@ -11,11 +11,6 @@ main().catch(err => console.log("main catch: ", err));
 
 async function main() {
     await mongoose.connect(`mongodb://${ip}:${port}/${dbName}`);
-        /* .then(()=>{
-            console.log("db sucessfully connected");
-        }).catch((err)=>{
-            console.log("error catch: ", err)
-        }); */
         console.log("db sucessfully connected");
 }
 

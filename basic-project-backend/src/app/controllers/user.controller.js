@@ -4,7 +4,7 @@ const statusMessage = require('../../constant/statusMessage');
 const userController = {
     getAll: async (req, res) => {
         const userAuth = res.authenticated;
-        console.log('@@@@ auth', userAuth);
+        console.log('auth data', userAuth);
         try {
             await userService.getAll()
                 .then( users => {
@@ -33,30 +33,18 @@ const userController = {
         try {
             const { name, email, password } = req.body;
             var img;
-            /* console.log("data", { name, email}); */
+
             if(req.file){
-                /* console.log("file", req.file); */
                 img = req.file.path
             }
-            /* console.log("img", img); */
-            
-            /* console.log("data", { name, email});
-            console.log("file", file); */
-            //const response = await userService.create({name, email});
+
             await userService.create({name, email, password, img})
                 .then( data => {
-                    /* console.log('$$$$', data); */
                     return res.status(201).json(data);
                 })
                 .catch( e =>{
                     return res.status(400).json(e);
                 });
-            /* if(response){
-                console.log('$$$$', response);
-                return res.status(201).json(response);
-            }
-            //return res.status(400).send(statusMessage.user.createdError);
-            return res.status(400).json(response); */
         } catch(e) {
             return res.status(500).json(e);
         }
@@ -84,20 +72,14 @@ const userController = {
             const { id } = req.params;
             const response = await userService.delete(id)
                 .then(data => {
-                    console.log('resppppp', data);
                     return res.status(201).json(data);
                 })
                 .catch( e => {
                     return res.status(400).json(e);
                 });
 
-            /* if(response){
-                console.log('resppppp', response);
-                return res.status(201).json(response);
-            }
-            return res.status(400).send(statusMessage.user.notfound); */
         } catch(e) {
-            return res.status(400).send(e);
+            return res.status(500).send(e);
         }
     }
 }
