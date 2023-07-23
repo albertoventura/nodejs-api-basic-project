@@ -1,6 +1,6 @@
 //const root = '/users';
 
-const userPath = {
+const user = {
     root: '/users',
     getAllUsers: '/',
     getUserById: '/:id',
@@ -8,12 +8,17 @@ const userPath = {
     updateUser: '/:id',
     deleteUser: '/:id',
 }
-
-const loginPath = {
+const signup = {
+    /* singin: "/signin",
+    singup: "/signup", */
+    root: '/signup'
+}
+const login = {
     root: "/login",
 }
 
 module.exports = {
-    userPath,
-    loginPath,
+    user,
+    login,
+    signup,
 }

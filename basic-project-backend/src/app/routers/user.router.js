@@ -17,10 +17,10 @@ const userController = require('../controllers/user.controller');
     })
 } */
 
-router.get(path.userPath.getAllUsers, userController.getAll);
-router.get(path.userPath.getUserById, userController.getById);
-router.post(path.userPath.createUser, uploadFile.single("file"), userController.create);
-router.put(path.userPath.updateUser, uploadFile.single("file"), userController.update);
-router.delete(path.userPath.deleteUser, userController.delete);
+router.get(path.user.getAllUsers, userController.getAll);
+router.get(path.user.getUserById, userController.getById);
+router.post(path.user.createUser, uploadFile.single("file"), userController.create);
+router.put(path.user.updateUser, uploadFile.single("file"), userController.update);
+router.delete(path.user.deleteUser, userController.delete);
 
 module.exports = router;

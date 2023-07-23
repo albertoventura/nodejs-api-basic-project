@@ -37,7 +37,8 @@ const userService = {
                 name: data.name,
                 email: data.email,
                 password: passwordHash,
-                img: data.img ? data.img : "",
+                //img: data.img ? data.img : "",
+                img: data.img,
             });
             return user.save()
                 .then(doc => {
