@@ -1,6 +1,7 @@
 const joi = require("joi");
 const md5 = require("md5");
 const jwtService = require("./jwt.service");
+const userService = require("../services/user.service");
 
 const loginService = {
     validateBody: (data) => {
@@ -21,10 +22,17 @@ const loginService = {
     },
     login: async (data) => {
         const passwordHash = md5(data.password);
-        const user = await mock.find( e => {
+        /* const user = await mock.find( e => {
             return data.email === e.email;
-        });
-
+        }); */
+        const user = await userService.getAll()
+            .then( user => {
+                return user.find(e => {
+                    return data.email === e.email;
+                });
+            })
+            .catch()
+        console.log('loggggggin', user);
         if(!user || user.password !== passwordHash){
             throw new Error('Invalid user NotFoundError');
         }

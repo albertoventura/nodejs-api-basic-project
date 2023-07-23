@@ -3,6 +3,7 @@ const loginService = require("../services/login.service");
 const loginController = {
     login: async (req, res) => {
         try {
+            console.log('req.body', req.body);
             const { email, password } = req.body;
             console.log('body', {email, password});
             const data = loginService.validateBody({email, password});
