@@ -32,7 +32,7 @@ const userController = {
     create: async (req, res) => {
         try {
             const { name, email, password } = req.body;
-            var img;
+            let img;
 
             if(req.file){
                 img = req.file.path
@@ -53,7 +53,7 @@ const userController = {
         try {
             const { id } = req.params;
             const { name, email, password} = req.body;
-            var img;
+            let img;
             if(req.file){
                 img = req.file.path
             }

@@ -7,7 +7,7 @@ const signController = {
     signup: async (req, res) => {
         try {
             const { name, email, password } = req.body;
-            var img;
+            let img;
             if(req.file){
                 img = req.file.path;
             }
