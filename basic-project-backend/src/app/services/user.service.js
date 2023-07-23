@@ -82,15 +82,15 @@ const userService = {
                     console.log('del data img:', data.img);
                     if(data.img){
                         console.log('##########>', data.img);
-                        fs.unlinkSync(data.img)
-                            .then(a => { 
+                        fs.unlinkSync(data.img);
+                            /* .then(a => { 
                                 console.log("@@", a);    
                                 return a
                             })
                             .catch(e => {
                                 console.log("eee", e);    
                                 return e
-                            });
+                            }); */
                     }
                     return data;
                 })

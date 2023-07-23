@@ -82,12 +82,20 @@ const userController = {
     delete: async (req, res) => {
         try {
             const { id } = req.params;
-            const response = await userService.delete(id);
+            const response = await userService.delete(id)
+                .then(data => {
+                    console.log('resppppp', data);
+                    return res.status(201).json(data);
+                })
+                .catch( e => {
+                    return res.status(400).json(e);
+                });
 
-            if(response){
+            /* if(response){
+                console.log('resppppp', response);
                 return res.status(201).json(response);
             }
-            return res.status(400).send(statusMessage.user.notfound);
+            return res.status(400).send(statusMessage.user.notfound); */
         } catch(e) {
             return res.status(400).send(e);
         }
